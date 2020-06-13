@@ -40,7 +40,7 @@ class Words extends React.Component {
                 throw new Error(res.statisText);
             }
             return res.json();
-        }).then(words => this.setState({words: words}));
+        }).then(words => this.setState({words: (words == null) ? {} : words}));
     }
     _post(word){
         return fetch(`${databaseURL}/words.json`, {
@@ -104,8 +104,7 @@ class Words extends React.Component {
                 {Object.keys(this.state.words).map(id => {
                     const word = this.state.words[id];
                     return (
-                        <div key={id}>
-                            <Card>
+                            <Card key={id}>
                                 <CardContent>
                                     <Typography color="textSecondary" gutterBottom>
                                         가중치: {word.weight}
@@ -122,10 +121,9 @@ class Words extends React.Component {
                                     </Grid>
                                 </CardContent>
                             </Card>
-                        </div>
                     );
                 })}
-                <Fab color="primary" className={classes.fab} onClick={this.handleDialogToggle}>
+                 <Fab color="primary" className={classes.fab} onClick={this.handleDialogToggle}>
                     <AddIcon />
                 </Fab>
                 <Dialog open={this.state.dialog} onClose={this.handleDialogToggle}>
@@ -138,7 +136,7 @@ class Words extends React.Component {
                         <Button variant = "contained" color="primary" onClick={this.handleSubmit}>추가</Button>
                         <Button variant = "outlined" color="primary" onClick={this.handleDialogToggle}>닫기</Button>
                     </DialogActions>
-                </Dialog>
+                </Dialog> 
             </div>
         );
     }
